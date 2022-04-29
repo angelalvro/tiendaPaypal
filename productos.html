@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página web Tienda Cafe</title>
+    <meta name="description" content="Página web Tienda Cafe">
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AXVNPP3fwt0GYxGl8J_cicyin1ytd2SAdh6qwNWKzBWhkKe0wfbrN7k-3d3zZV7zes5I78x-rL-lCWrn&enable-funding=venmo&currency=EUR&disable-funding=card,sofort" data-sdk-integration-source="button-factory"></script>
+</head>
+<body>
+
+    <header class="header">
+        <a class="logo" href="index.html">
+            <h1 class="logo__nombre centrar-texto"><i class="fas fa-coffee"></i></h1>
+        </a>
+
+        <nav class="navegacion barra contenedor">
+            <input class="buscador" type="search" placeholder="Buscar productos"/>
+            <a href="index.html" class="navegacion__enlace">Productos</a>
+            <a href="index.html" class="navegacion__enlace">Contacto</a>
+            <a href="index.html" class="navegacion__enlace"><i class="fas fa-shopping-cart"></i></a>
+        </nav>
+
+    </header>
+    <main class="contenido-producto">
+        <h1 class="titulo">ECOLÓGICO CÁPSULAS POINT</h1>
+        <article class="producto">
+                <article class="producto__imagen">
+                    <img class="img-principal" id="imgPrincipal" loading="lazy" src="img/cafe75.png" alt="imagen blog"> 
+                    <article class="minuatura-imagen">
+                        <img onclick="cambiarImagen(this.src)" class="img-min" loading="lazy" src="img/cafe75.png" alt="imagen blog"> 
+                        <img onclick="cambiarImagen(this.src)" class="img-min" loading="lazy" src="img/cafe72.png" alt="imagen blog"> 
+                        <img onclick="cambiarImagen(this.src)" class="img-min" loading="lazy" src="img/cafe71.png" alt="imagen blog"> 
+                        <img onclick="cambiarImagen(this.src)" class="img-min" loading="lazy" src="img/cafe73.png" alt="imagen blog"> 
+                        <img onclick="cambiarImagen(this.src)" class="img-min" loading="lazy" src="img/cafe74.png" alt="imagen blog">
+                    </article>
+                </article>
+                <section class="producto__contenido">
+                    <h4 class="no-margin">Caja de 100 capsulas</h4>
+                    <p>Café de tueste natural 100% ecológico envasado en una nueva línea de cápsulas compatibles con sistema espresso point, que permite mantener todas las propiedades de aroma y sabor del café reción tostado y molido. Un sistema fácil, cómodo y limpio que proporciona un espresso de calidad con un perfecto acabado en taza. El certificado ecológico garantiza la producción de café siguiendo procesos respetuosos con el medio ambiente y su obtención mediante un sistema de producción agroalimentario ecológico que garantiza la calidad del producto.</p>
+                    <p>PVP: 43.78 €</p>
+
+                    <form class="formulario">
+
+                        <input id="cantidad" class="formulario__campo" type="number" placeholder="Cantidad" min="1" value="1">
+        
+                        <div id="paypal-button-container"></div>
+                    </form>
+                </section>
+        </article>
+        <article>
+            <p class="respuestaPaypal" id="respuestaPago"></p>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <a class="footer__logo"><i class="fas fa-coffee"></i></a>
+        <article class="footer_contenedor">
+            <a href="#" class="filtro__enlace seleccionado">SHOP</a>
+            <a href="#" class="filtro__enlace">Suscripción</a>
+            <a href="#" class="filtro__enlace">Cafés</a>
+            <a href="#" class="filtro__enlace">Máquinas</a>
+            <a href="#" class="filtro__enlace">Accesorios</a>
+        </article>
+        <article class="footer_contenedor">
+            <a href="#" class="filtro__enlace seleccionado">LINKS</a>
+            <a href="#" class="filtro__enlace">Nuestra historia</a>
+            <a href="#" class="filtro__enlace">Incapto en los medios</a>
+            <a href="#" class="filtro__enlace">Escoge tu café ideal</a>
+            <a href="#" class="filtro__enlace">Equivalencias con cápsulas</a>
+            <a href="#" class="filtro__enlace">Calcula tu ahorro</a>
+            <a href="#" class="filtro__enlace">Solución para empresas</a>
+            <a href="#" class="filtro__enlace">Careers</a>
+        </article>
+        <article class="footer_contenedor">
+            <a href="#" class="filtro__enlace seleccionado">AYUDA</a>
+            <a href="#" class="filtro__enlace">Envíos y devoluciones</a>
+            <a href="#" class="filtro__enlace">Asistencia técnica</a>
+            <a href="#" class="filtro__enlace">FAQ</a>
+        </article>
+    </footer>
+
+<script>
+    function cambiarImagen(src){
+        $("#imgPrincipal").attr("src",src);
+    }
+
+    function initPayPalButton() {
+      paypal.Buttons({
+        style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'paypal',
+          
+        },  
+        createOrder: function(data, actions) {
+            var cantidad = $("#cantidad").val();
+            var precio = cantidad * 43.78;
+            return actions.order.create({
+                purchase_units: [{"amount":{"currency_code":"EUR","value":precio}}]
+            });
+        },  
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(orderData) {
+            const element = document.getElementById('paypal-button-container');
+            $("#respuestaPago" ).text( "¡Gracias por tu compra!");      
+          });
+        },  
+        onError: function(err) {
+          console.log(err);
+        }
+      }).render('#paypal-button-container');
+    }
+    initPayPalButton();
+</script>
+</body>
